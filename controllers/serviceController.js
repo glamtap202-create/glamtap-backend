@@ -127,10 +127,20 @@ const getServicesByCategory = async (req, res) => {
       return dbSlug === slug;
     });
 
+    // Duplicate services hatao (same name + price wale) — DB me accidental
+    // duplicate documents ki wajah se ye zaroori hai jab tak DB clean nahi hota
+    const seen = new Set();
+    const uniqueServices = filteredServices.filter((service) => {
+      const key = `${service.name}-${service.price}`;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+
     res.status(200).json({
       success: true,
-      total: filteredServices.length,
-      services: filteredServices,
+      total: uniqueServices.length,
+      services: uniqueServices,
     });
   } catch (error) {
     res.status(500).json({

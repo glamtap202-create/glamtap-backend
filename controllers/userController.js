@@ -123,11 +123,6 @@ const getUserProfile = async (req, res) => {
     }
 };
 
-module.exports = {
-    registerUser,
-    loginUser,
-    getUserProfile
-};
 // ================= GET ALL USERS (ADMIN) =================
 
 const getAllUsers = async (req, res) => {
@@ -145,6 +140,7 @@ const getAllUsers = async (req, res) => {
         });
     }
 };
+
 module.exports = {
     registerUser,
     loginUser,

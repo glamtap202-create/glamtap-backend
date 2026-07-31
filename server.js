@@ -6,23 +6,14 @@ require("dotenv").config();
 
 const app = express();
 
-
-// ================= MIDDLEWARE (sabse pehle, routes se bhi pehle) =================
-
+// ================= MIDDLEWARE =================
 app.use(cors());
 app.use(express.json());
 
-
 // ================= IMAGE STATIC FOLDER =================
-
-app.use(
-  "/images",
-  express.static(path.join(__dirname, "images"))
-);
-
+app.use("/images", express.static(path.join(__dirname, "images")));
 
 // ================= IMPORT ROUTES =================
-
 const userRoutes = require("./routes/userRoutes");
 const salonRoutes = require("./routes/salonRoutes");
 const serviceRoutes = require("./routes/serviceRoutes");
@@ -47,16 +38,12 @@ const settingsRoutes = require("./routes/settingsRoutes");
 const roleRoutes = require("./routes/roleRoutes");
 const activityLogRoutes = require("./routes/activityLogRoutes");
 const contactRoutes = require("./routes/contactRoutes");
+const offerRoutes = require("./routes/offerRoutes"); // 👈 Offer Route Import
 
-
-// ================= HOME ROUTE =================
-
+// ================= TEST & HOME ROUTES =================
 app.get("/", (req, res) => {
   res.send("API is working 🚀");
 });
-
-
-// ================= TEST ROUTE =================
 
 app.get("/api/test", (req, res) => {
   res.json({
@@ -65,18 +52,8 @@ app.get("/api/test", (req, res) => {
   });
 });
 
-
-// ================= API ROUTES =================
-
-app.use("/api/contact", contactRoutes);
-app.use("/api/activity-logs", activityLogRoutes);
-app.use("/api/roles", roleRoutes);
-app.use("/api/cms", cmsRoutes);
-app.use("/api/coupons", couponRoutes);
-app.use("/api/settlements", settlementRoutes);
-app.use("/api/payments", paymentRoutes);
-app.use("/api/support-tickets", supportTicketRoutes);
-app.use("/api/settings", settingsRoutes);
+// ================= API ROUTES MOUNTING =================
+app.use("/api/offers", offerRoutes); // 👈 Offer Route Base Path
 
 app.use("/api/users", userRoutes);
 app.use("/api/salons", salonRoutes);
@@ -93,12 +70,19 @@ app.use("/api/banners", bannerRoutes);
 app.use("/api/brands", brandRoutes);
 app.use("/api/features", featureRoutes);
 app.use("/api/stats", statsRoutes);
-
 app.use("/api/combos", comboRoutes);
 
+app.use("/api/contact", contactRoutes);
+app.use("/api/activity-logs", activityLogRoutes);
+app.use("/api/roles", roleRoutes);
+app.use("/api/cms", cmsRoutes);
+app.use("/api/coupons", couponRoutes);
+app.use("/api/settlements", settlementRoutes);
+app.use("/api/payments", paymentRoutes);
+app.use("/api/support-tickets", supportTicketRoutes);
+app.use("/api/settings", settingsRoutes);
 
-// ================= DATABASE + SERVER =================
-
+// ================= DATABASE + SERVER START =================
 const PORT = process.env.PORT || 5000;
 
 mongoose
