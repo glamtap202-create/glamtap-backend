@@ -3,6 +3,7 @@ const {
     registerUser,
     loginUser,
     getUserProfile,
+    updateUserProfile,
     getAllUsers
 } = require("../controllers/userController");
 
@@ -27,6 +28,7 @@ router.post("/login", loginUser);
 
 // Protected Route
 router.get("/profile", protect, getUserProfile);
+router.put("/profile", protect, updateUserProfile);
 
 // Admin Route - get all users
 router.get("/", protect, admin, getAllUsers);
