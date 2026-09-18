@@ -11,10 +11,7 @@ const bannerSchema = new mongoose.Schema(
         type:String
     },
 
-    image:{
-        type:String,
-        required:true
-    },
+   //
 
     buttonText:{
         type:String
